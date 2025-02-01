@@ -13,7 +13,7 @@ export default function WorkoutListItem({
 }: {
   workout: WorkoutWithExercises;
 }) {
-  const time = dayjs(workout.createdAt).format('HH:mm, DD MMM YYYY');
+  const time = dayjs(workout.createdAt).format('HH:mm, ddd DD MMM YYYY');
 
   const durationInSeconds = dayjs(workout.finishedAt).diff(
     dayjs(workout.createdAt),
