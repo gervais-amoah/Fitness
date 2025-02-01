@@ -1,18 +1,7 @@
 import { create } from 'zustand';
 
-type State = {
-  count: number;
-};
+type State = {};
 
-type Actions = {
-  increment: () => void;
-  decrement: () => void;
-};
+type Actions = {};
 
-const useStore = create<State & Actions>()((set) => ({
-  count: 1,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 })),
-}));
-
-export default useStore;
+export const useWorkoutStore = create<State & Actions>()((set) => ({}));
