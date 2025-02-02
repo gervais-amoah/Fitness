@@ -16,7 +16,7 @@ type WorkoutListItem = {
 export default function WorkoutListItem({ workout }: WorkoutListItem) {
   return (
     <Card
-      title={dayjs(workout.createdAt).format('HH:mm dddd, D MMM')}
+      title={dayjs(workout.createdAt).format('HH:mm dddd, D MMM YYYY')}
       href={`/workout/${workout.id}`}
       style={{ gap: 8 }}
     >
