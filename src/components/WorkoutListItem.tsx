@@ -1,83 +1,76 @@
-import { Text, View } from '@/components/general/Themed';
-import Colors from '@/constants/Colors';
-import { WorkoutWithExercises } from '@/types/models';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import dayjs from 'dayjs';
-import React from 'react';
+import Card from '@/components/general/Card';
+import { View, Text } from '@/components/general/Themed';
 import { StyleSheet } from 'react-native';
-import ExerciseSummary from './ExerciseSummary';
-import Card from './general/Card';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { WorkoutWithExercises } from '@/types/models';
+import dayjs from 'dayjs';
 
-export default function WorkoutListItem({
-  workout,
-}: {
+import { getBestSet } from '@/services/setService';
+import { getWorkoutTotalWeight } from '@/services/workoutService';
+import { calculateDuration } from '@/utils/time';
+
+type WorkoutListItem = {
   workout: WorkoutWithExercises;
-}) {
-  const time = dayjs(workout.createdAt).format('HH:mm, ddd DD MMM YYYY');
+};
 
-  const durationInSeconds = dayjs(workout.finishedAt).diff(
-    dayjs(workout.createdAt),
-    'seconds'
-  );
-  const formattedDuration = dayjs(durationInSeconds * 1000).format('mm:ss');
-
-  const totalWeight = workout.exercises.reduce((total, exercise) => {
-    return (
-      total +
-      exercise.sets.reduce((totalSet, set) => {
-        return totalSet + (set.weight ?? 0);
-      }, 0)
-    );
-  }, 0);
-
+export default function WorkoutListItem({ workout }: WorkoutListItem) {
   return (
-    <Card title={time} href={`/workout/${workout.id}`}>
-      <View style={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Exercise</Text>
-          <Text style={styles.headerText}>Best set</Text>
-        </View>
-        {workout.exercises.map((exercise) => {
-          return <ExerciseSummary key={exercise.id} exercise={exercise} />;
-        })}
+    <Card
+      title={dayjs(workout.createdAt).format('HH:mm dddd, D MMM')}
+      href={`/workout/${workout.id}`}
+      style={{ gap: 8 }}
+    >
+      <View style={styles.row}>
+        <Text style={styles.label}>Exercise</Text>
+        <Text style={styles.label}>Best set</Text>
       </View>
 
+      {workout.exercises.map((exercise) => {
+        const bestSet = getBestSet(exercise.sets);
+        return (
+          <View key={exercise.id} style={styles.row}>
+            <Text style={{ color: 'gray' }}>
+              {exercise.sets.length} x {exercise.name}
+            </Text>
+            {bestSet && (
+              <Text style={{ color: 'gray' }}>
+                {bestSet.reps}{' '}
+                {bestSet.weight ? `x ${bestSet.weight} kg` : 'reps'}
+              </Text>
+            )}
+          </View>
+        );
+      })}
+
+      {/* Footer */}
       <View style={styles.footer}>
-        <View style={styles.footerRow}>
-          <MaterialCommunityIcons
-            name="timer"
-            size={18}
-            color={Colors.light.tabIconDefault}
-          />
-          <Text style={styles.footerText}>{formattedDuration}</Text>
-        </View>
-        <View style={styles.footerRow}>
-          <MaterialCommunityIcons
-            name="weight-kilogram"
-            size={18}
-            color={Colors.light.tabIconDefault}
-          />
-          <Text style={styles.footerText}>{totalWeight}</Text>
-        </View>
+        <Text>
+          <FontAwesome5 name="clock" size={16} color="gray" />{' '}
+          {calculateDuration(workout.createdAt, workout.finishedAt)}
+        </Text>
+        <Text>
+          <FontAwesome5 name="weight-hanging" size={16} color="gray" />{' '}
+          {getWorkoutTotalWeight(workout)} kg
+        </Text>
       </View>
     </Card>
   );
 }
 
 const styles = StyleSheet.create({
-  content: {
-    gap: 5,
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  header: { flexDirection: 'row', justifyContent: 'space-between' },
-  headerText: { fontWeight: 'bold', fontSize: 16 },
+  label: {
+    fontWeight: 'bold',
+  },
   footer: {
     flexDirection: 'row',
-    gap: 10,
-    marginTop: 8,
-    paddingTop: 5,
-    borderTopColor: Colors.light.tabIconDefault,
-    borderTopWidth: 1,
+    gap: 20,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: '#333',
+    marginTop: 10,
+    paddingTop: 10,
   },
-  footerRow: { flexDirection: 'row', alignItems: 'center', gap: 5 },
-  footerText: { fontSize: 14 },
 });
