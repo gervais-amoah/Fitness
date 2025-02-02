@@ -1,5 +1,6 @@
 import Card from '@/components/general/Card';
 import { Text, View } from '@/components/general/Themed';
+import WorkoutExerciseItem from '@/components/WorkoutExerciseItem';
 import dummyWorkouts from '@/data/dummyWorkouts';
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
@@ -29,16 +30,7 @@ export default function WorkoutScreen() {
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
         renderItem={({ item }) => (
-          <Card title={item.name}>
-            <View>
-              {item.sets.map((set) => (
-                <View key={set.id} style={{ gap: 5 }}>
-                  <Text>{set.weight}</Text>
-                  <Text>{set.reps} reps</Text>
-                </View>
-              ))}
-            </View>
-          </Card>
+          <WorkoutExerciseItem item={item} key={item.id} />
         )}
       />
     </View>
