@@ -1,38 +1,44 @@
-import Card from '@/components/general/Card';
-import { Text, View } from '@/components/general/Themed';
-import WorkoutExerciseItem from '@/components/WorkoutExerciseItem';
-import dummyWorkouts from '@/data/dummyWorkouts';
 import { useLocalSearchParams } from 'expo-router';
-import React from 'react';
-import { FlatList } from 'react-native';
+import { View, Text } from '@/components/general/Themed';
+import dummyWorkouts from '@/data/dummyWorkouts';
+import WorkoutExerciseItem from '@/components/WorkoutExerciseItem';
+import { FlatList, StyleSheet } from 'react-native';
+import dayjs from 'dayjs';
 
 export default function WorkoutScreen() {
   const { id } = useLocalSearchParams();
-  const workout = dummyWorkouts.find((workout) => workout.id === id);
 
-  if (!workout)
-    return (
-      <View>
-        <Text>Workout not found</Text>
-      </View>
-    );
+  const workout = dummyWorkouts.find((w) => w.id === id);
+
+  if (!workout) {
+    return <Text>Workout not found</Text>;
+  }
 
   return (
-    <View>
-      <View style={{ paddingHorizontal: 16, paddingVertical: 20, gap: 5 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 24 }}>
-          Workout Details
-        </Text>
-        <Text style={{ fontSize: 14 }}>9 minutes ago</Text>
-      </View>
-      <FlatList
-        data={workout.exercises}
-        keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-        renderItem={({ item }) => (
-          <WorkoutExerciseItem item={item} key={item.id} />
-        )}
-      />
-    </View>
+    <FlatList
+      data={workout.exercises}
+      contentContainerStyle={{ gap: 8, padding: 8 }}
+      renderItem={({ item }) => <WorkoutExerciseItem exercise={item} />}
+      ListHeaderComponent={
+        <>
+          <Text style={styles.title}>Workout details</Text>
+          <Text style={styles.date}>
+            {dayjs(workout.createdAt).format('HH:mm dddd, D MMM')}
+          </Text>
+        </>
+      }
+    />
   );
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  date: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+});
