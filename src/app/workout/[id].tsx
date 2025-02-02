@@ -19,7 +19,9 @@ export default function WorkoutScreen() {
   return (
     <View>
       <View style={{ paddingHorizontal: 16, paddingVertical: 20, gap: 5 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 24 }}>Workout List</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 24 }}>
+          Workout Details
+        </Text>
         <Text style={{ fontSize: 14 }}>9 minutes ago</Text>
       </View>
       <FlatList
@@ -27,8 +29,15 @@ export default function WorkoutScreen() {
         keyExtractor={(item) => item.id}
         ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
         renderItem={({ item }) => (
-          <Card title={item.id} href={`/workout/${item.id}`}>
-            <Text>Current Workout</Text>
+          <Card title={item.name}>
+            <View>
+              {item.sets.map((set) => (
+                <View key={set.id} style={{ gap: 5 }}>
+                  <Text>{set.weight}</Text>
+                  <Text>{set.reps} reps</Text>
+                </View>
+              ))}
+            </View>
           </Card>
         )}
       />
