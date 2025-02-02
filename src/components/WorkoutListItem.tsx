@@ -1,7 +1,7 @@
 import Card from '@/components/general/Card';
 import { View, Text } from '@/components/general/Themed';
 import { StyleSheet } from 'react-native';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { WorkoutWithExercises } from '@/types/models';
 import dayjs from 'dayjs';
 
@@ -45,11 +45,15 @@ export default function WorkoutListItem({ workout }: WorkoutListItem) {
       {/* Footer */}
       <View style={styles.footer}>
         <Text>
-          <FontAwesome5 name="clock" size={16} color="gray" />{' '}
+          <MaterialCommunityIcons name="timer" size={16} color="gray" />{' '}
           {calculateDuration(workout.createdAt, workout.finishedAt)}
         </Text>
         <Text>
-          <FontAwesome5 name="weight-hanging" size={16} color="gray" />{' '}
+          <MaterialCommunityIcons
+            name="weight-kilogram"
+            size={16}
+            color="gray"
+          />{' '}
           {getWorkoutTotalWeight(workout)} kg
         </Text>
       </View>
