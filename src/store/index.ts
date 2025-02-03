@@ -1,7 +1,8 @@
 import { createExercise } from '@/services/exerciseService';
-import { createSet } from '@/services/setService';
+import { createSet, updateSet } from '@/services/setService';
 import { newWorkout } from '@/services/workoutService';
-import { WorkoutWithExercises } from '@/types/models';
+import { ExerciseSet, WorkoutWithExercises } from '@/types/models';
+import { current } from 'immer';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
@@ -17,6 +18,10 @@ type Actions = {
   addExercise: (name: string) => void;
 
   addSet: (exerciseId: string) => void;
+  updateSet: (
+    setId: string,
+    updatedFields: Pick<ExerciseSet, 'weight' | 'reps'>
+  ) => void;
 };
 
 export const useWorkoutStore = create<State & Actions>()(
@@ -62,6 +67,26 @@ export const useWorkoutStore = create<State & Actions>()(
         );
         if (exercise) {
           exercise.sets.push(newSet);
+        }
+      });
+    },
+    updateSet: (
+      setId: string,
+      updatedFields: Pick<ExerciseSet, 'weight' | 'reps'>
+    ) => {
+      console.log('updateSet', setId, updatedFields);
+
+      set(({ currentWorkout }) => {
+        const exercise = currentWorkout?.exercises.find((ex) =>
+          ex.sets.some((set) => set.id === setId)
+        );
+
+        if (exercise) {
+          const setToUpdate = exercise.sets.find((set) => set.id === setId);
+          if (setToUpdate) {
+            const newSet = updateSet(setToUpdate, updatedFields);
+            Object.assign(setToUpdate, newSet);
+          }
         }
       });
     },

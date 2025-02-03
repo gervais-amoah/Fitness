@@ -1,4 +1,5 @@
-import { View, Text, TextInput } from '@/components/general/Themed';
+import { Text, TextInput, View } from '@/components/general/Themed';
+import { useWorkoutStore } from '@/store';
 import { ExerciseSet } from '@/types/models';
 import { useState } from 'react';
 import { StyleSheet } from 'react-native';
@@ -14,12 +15,16 @@ export default function SetItem({ index, set }: SetItem) {
   const [weight, setWeight] = useState(set.weight?.toString() || '');
   const [reps, setReps] = useState(set.reps?.toString() || '');
 
+  const updateSet = useWorkoutStore().updateSet;
+
   const handleWeightChange = () => {
-    console.warn('Weight changed to: ', weight);
+    updateSet(set.id, { weight: parseFloat(weight) });
+    console.log('weight updated');
   };
 
   const handleRepsChange = () => {
-    console.warn('Reps changed to: ', reps);
+    updateSet(set.id, { reps: parseInt(reps) });
+    console.log('reps updated');
   };
 
   const renderRightActions = () => (
