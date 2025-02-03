@@ -26,14 +26,14 @@ export default function WorkoutExerciseItem({
   ];
 
   return (
-    <Card title="Exercise">
+    <Card title={exercise.name}>
       <View style={styles.header}>
         <Text style={styles.setNumber}>Set</Text>
         <Text style={styles.setInfo}>kg</Text>
         <Text style={styles.setInfo}>Reps</Text>
       </View>
       <View style={{ gap: 5 }}>
-        {sets.map((item, index) => (
+        {exercise.sets.map((item, index) => (
           <SetItem key={item.id} index={index} set={item} />
         ))}
       </View>
