@@ -1,7 +1,6 @@
 import CustomButton from '@/components/general/CustomButton';
 import { View } from '@/components/general/Themed';
 import WorkoutListItem from '@/components/WorkoutListItem';
-import dummyWorkouts from '@/data/dummyWorkouts';
 import { useWorkoutStore } from '@/store';
 import { Link, router } from 'expo-router';
 import React from 'react';
@@ -10,6 +9,7 @@ import { FlatList } from 'react-native';
 export default function HomeScreen() {
   const currentWorkout = useWorkoutStore((state) => state.currentWorkout);
   const startWorkout = useWorkoutStore((state) => state.startWorkout);
+  const workouts = useWorkoutStore((state) => state.workouts);
 
   const onStartWorkout = () => {
     startWorkout();
@@ -33,7 +33,7 @@ export default function HomeScreen() {
       )}
 
       <FlatList
-        data={dummyWorkouts}
+        data={workouts}
         contentContainerStyle={{ gap: 10 }}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <WorkoutListItem workout={item} />}

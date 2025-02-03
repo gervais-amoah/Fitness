@@ -2,10 +2,14 @@ import Card from '@/components/general/Card';
 import { View, Text } from '@/components/general/Themed';
 import { StyleSheet } from 'react-native';
 import SetItem from './SetItem';
-import { ExerciseSet } from '@/types/models';
+import { ExerciseSet, ExerciseWithSets } from '@/types/models';
 import CustomButton from '../general/CustomButton';
 
-export default function WorkoutExerciseItem() {
+export default function WorkoutExerciseItem({
+  exercise,
+}: {
+  exercise: ExerciseWithSets;
+}) {
   const sets: ExerciseSet[] = [
     {
       id: '1',

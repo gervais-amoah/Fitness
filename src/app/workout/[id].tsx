@@ -4,11 +4,14 @@ import dummyWorkouts from '@/data/dummyWorkouts';
 import WorkoutExerciseItem from '@/components/logger/WorkoutExerciseItem';
 import { FlatList, StyleSheet } from 'react-native';
 import dayjs from 'dayjs';
+import { useWorkoutStore } from '@/store';
+import React from 'react';
 
 export default function WorkoutScreen() {
   const { id } = useLocalSearchParams();
-
-  const workout = dummyWorkouts.find((w) => w.id === id);
+  const workout = useWorkoutStore((state) =>
+    state.workouts.find((w) => w.id === id)
+  );
 
   if (!workout) {
     return <Text>Workout not found</Text>;
@@ -20,12 +23,12 @@ export default function WorkoutScreen() {
       contentContainerStyle={{ gap: 8, padding: 8 }}
       renderItem={({ item }) => <WorkoutExerciseItem exercise={item} />}
       ListHeaderComponent={
-        <>
+        <React.Fragment>
           <Text style={styles.title}>Workout details</Text>
           <Text style={styles.date}>
             {dayjs(workout.createdAt).format('HH:mm dddd, D MMM')}
           </Text>
-        </>
+        </React.Fragment>
       }
     />
   );
