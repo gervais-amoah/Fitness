@@ -1,29 +1,17 @@
 import Card from '@/components/general/Card';
-import { View, Text } from '@/components/general/Themed';
+import { Text, View } from '@/components/general/Themed';
+import { useWorkoutStore } from '@/store';
+import { ExerciseWithSets } from '@/types/models';
 import { StyleSheet } from 'react-native';
-import SetItem from './SetItem';
-import { ExerciseSet, ExerciseWithSets } from '@/types/models';
 import CustomButton from '../general/CustomButton';
+import SetItem from './SetItem';
 
 export default function WorkoutExerciseItem({
   exercise,
 }: {
   exercise: ExerciseWithSets;
 }) {
-  const sets: ExerciseSet[] = [
-    {
-      id: '1',
-      weight: 20,
-      reps: 10,
-      exerciseId: 'e1',
-    },
-    {
-      id: '2',
-      weight: 50,
-      reps: 5,
-      exerciseId: 'e1',
-    },
-  ];
+  const addSet = useWorkoutStore().addSet;
 
   return (
     <Card title={exercise.name}>
@@ -38,7 +26,7 @@ export default function WorkoutExerciseItem({
         ))}
       </View>
       <CustomButton
-        onPress={() => console.warn('Adding set')}
+        onPress={() => addSet(exercise.id)}
         type="link"
         title="+ Add set"
         style={{ padding: 10, marginTop: 10 }}

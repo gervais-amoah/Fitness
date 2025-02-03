@@ -1,12 +1,10 @@
-import { useLocalSearchParams } from 'expo-router';
-import { View, Text } from '@/components/general/Themed';
-import dummyWorkouts from '@/data/dummyWorkouts';
-import WorkoutExerciseItem from '@/components/logger/WorkoutExerciseItem';
-import { FlatList, StyleSheet } from 'react-native';
-import dayjs from 'dayjs';
-import { useWorkoutStore } from '@/store';
-import React from 'react';
+import { Text } from '@/components/general/Themed';
 import WorkoutDetailsExerciseItem from '@/components/WorkoutDetailsExerciseItem';
+import { useWorkoutStore } from '@/store';
+import dayjs from 'dayjs';
+import { useLocalSearchParams } from 'expo-router';
+import React from 'react';
+import { FlatList, StyleSheet } from 'react-native';
 
 export default function WorkoutScreen() {
   const { id } = useLocalSearchParams();
