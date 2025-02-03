@@ -92,12 +92,20 @@ export const useWorkoutStore = create<State & Actions>()(
     },
     deleteSet: (setId) => {
       set(({ currentWorkout }) => {
-        const exercise = currentWorkout?.exercises.find((ex) =>
+        if (!currentWorkout) return;
+
+        const exercise = currentWorkout.exercises.find((ex) =>
           ex.sets.some((set) => set.id === setId)
         );
 
         if (exercise) {
           exercise.sets = exercise.sets.filter((set) => set.id !== setId);
+
+          if (exercise.sets.length === 0) {
+            currentWorkout.exercises = currentWorkout.exercises.filter(
+              (ex) => ex.id !== exercise.id
+            );
+          }
         }
       });
     },

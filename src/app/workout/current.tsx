@@ -32,6 +32,7 @@ export default function CurrentWorkoutScreen() {
           ),
         }}
       />
+      {/* TODO - Resolve the scroll behavior bug */}
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}
