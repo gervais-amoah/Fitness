@@ -1,13 +1,10 @@
-import Card from '@/components/general/Card';
 import CustomButton from '@/components/general/CustomButton';
-import { Text, View } from '@/components/general/Themed';
+import { View } from '@/components/general/Themed';
+import WorkoutListItem from '@/components/WorkoutListItem';
 import dummyWorkouts from '@/data/dummyWorkouts';
 import { Link } from 'expo-router';
 import React from 'react';
 import { FlatList } from 'react-native';
-import dayjs from 'dayjs';
-import WourkoutSummary from '@/components/general/WourkoutSummary';
-import WorkoutListItem from '@/components/WorkoutListItem';
 
 export default function HomeScreen() {
   return (
