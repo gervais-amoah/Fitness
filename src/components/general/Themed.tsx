@@ -63,6 +63,7 @@ export function TextInput(props: TextInputProps) {
   return (
     <DefaultTextInput
       style={[{ backgroundColor, color }, style]}
+      placeholderTextColor="grey"
       {...otherProps}
     />
   );
