@@ -2,7 +2,7 @@ import { WorkoutWithExercises } from '@/types/models';
 import { create } from 'zustand';
 
 type State = {
-  currentWorkout: null | WorkoutWithExercises;
+  currentWorkout: WorkoutWithExercises | null;
 };
 
 type Actions = {

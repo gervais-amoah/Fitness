@@ -1,15 +1,20 @@
-import { View, Text } from '@/components/general/Themed';
-import WorkoutExerciseItem from '@/components/logger/WorkoutExerciseItem';
-import { FlatList, KeyboardAvoidingView, Platform } from 'react-native';
-
-import { useHeaderHeight } from '@react-navigation/elements';
-import { Stack } from 'expo-router';
 import CustomButton from '@/components/general/CustomButton';
-import WorkoutHeader from '@/components/logger/WorkoutHeader';
 import SelectExerciseModal from '@/components/logger/SelectExerciseModal';
+import WorkoutExerciseItem from '@/components/logger/WorkoutExerciseItem';
+import WorkoutHeader from '@/components/logger/WorkoutHeader';
+import { useWorkoutStore } from '@/store';
+import { useHeaderHeight } from '@react-navigation/elements';
+import { Redirect, Stack } from 'expo-router';
+import { FlatList, KeyboardAvoidingView, Platform } from 'react-native';
 
 export default function CurrentWorkoutScreen() {
   const headerHeight = useHeaderHeight();
+
+  const currentWorkout = useWorkoutStore((state) => state.currentWorkout);
+
+  if (!currentWorkout) {
+    return <Redirect href="/" />;
+  }
 
   return (
     <>
