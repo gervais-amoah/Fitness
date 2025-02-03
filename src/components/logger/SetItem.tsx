@@ -16,6 +16,7 @@ export default function SetItem({ index, set }: SetItem) {
   const [reps, setReps] = useState(set.reps?.toString() || '');
 
   const updateSet = useWorkoutStore().updateSet;
+  const deleteSet = useWorkoutStore().deleteSet;
 
   const handleWeightChange = () => {
     updateSet(set.id, { weight: parseFloat(weight) });
@@ -29,7 +30,7 @@ export default function SetItem({ index, set }: SetItem) {
 
   const renderRightActions = () => (
     <CustomButton
-      onPress={() => console.warn('Deleting set: ', set.id)}
+      onPress={() => deleteSet(set.id)}
       title="Delete"
       type="link"
       style={{ width: 'auto', padding: 5 }}
