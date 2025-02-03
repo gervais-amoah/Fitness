@@ -2,7 +2,7 @@ import { View, Text, TextInput } from '@/components/general/Themed';
 import { ExerciseSet } from '@/types/models';
 import { useState } from 'react';
 import { StyleSheet } from 'react-native';
-// import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
+import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import CustomButton from '../general/CustomButton';
 
 type SetItem = {
@@ -33,28 +33,28 @@ export default function SetItem({ index, set }: SetItem) {
   );
 
   return (
-    // <Swipeable renderRightActions={renderRightActions}>
-    <View style={styles.container}>
-      <Text style={styles.setNumber}>{index + 1}</Text>
+    <Swipeable renderRightActions={renderRightActions}>
+      <View style={styles.container}>
+        <Text style={styles.setNumber}>{index + 1}</Text>
 
-      <TextInput
-        placeholder="50"
-        value={weight}
-        onChangeText={setWeight}
-        style={styles.input}
-        keyboardType="numeric"
-        onBlur={handleWeightChange}
-      />
-      <TextInput
-        placeholder="8"
-        value={reps}
-        onChangeText={setReps}
-        style={styles.input}
-        keyboardType="numeric"
-        onBlur={handleRepsChange}
-      />
-    </View>
-    // </Swipeable>
+        <TextInput
+          placeholder="50"
+          value={weight}
+          onChangeText={setWeight}
+          style={styles.input}
+          keyboardType="numeric"
+          onBlur={handleWeightChange}
+        />
+        <TextInput
+          placeholder="8"
+          value={reps}
+          onChangeText={setReps}
+          style={styles.input}
+          keyboardType="numeric"
+          onBlur={handleRepsChange}
+        />
+      </View>
+    </Swipeable>
   );
 }
 
