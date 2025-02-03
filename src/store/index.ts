@@ -2,6 +2,7 @@ import { createExercise } from '@/services/exerciseService';
 import { finishWorkout, newWorkout } from '@/services/workoutService';
 import { WorkoutWithExercises } from '@/types/models';
 import { create } from 'zustand';
+import { immer } from 'zustand/middleware/immer';
 
 type State = {
   currentWorkout: WorkoutWithExercises | null;
@@ -16,40 +17,38 @@ type Actions = {
   // removeExercise: (exercise: ExerciseWithSets) => void;
 };
 
-export const useWorkoutStore = create<State & Actions>()((set, get) => ({
-  //  States
-  currentWorkout: null,
-  workouts: [],
+export const useWorkoutStore = create<State & Actions>()(
+  immer((set, get) => ({
+    //  States
+    currentWorkout: null,
+    workouts: [],
 
-  // Actions
-  startWorkout: () => {
-    set({ currentWorkout: newWorkout() });
-  },
+    // Actions
+    startWorkout: () => {
+      set({ currentWorkout: newWorkout() });
+    },
 
-  finishWorkout: () => {
-    const { currentWorkout, workouts } = get();
+    finishWorkout: () => {
+      const { currentWorkout, workouts } = get();
 
-    if (!currentWorkout) return;
+      if (!currentWorkout) return;
 
-    set({
-      workouts: [...workouts, finishWorkout(currentWorkout)],
-      currentWorkout: null,
-    });
-  },
+      set((state) => {
+        state.currentWorkout = null;
+        state.workouts.unshift(currentWorkout);
+      });
+    },
 
-  addExercise: (name: string) => {
-    const { currentWorkout } = get();
+    addExercise: (name: string) => {
+      const { currentWorkout } = get();
 
-    if (!currentWorkout) return;
+      if (!currentWorkout) return;
 
-    set({
-      currentWorkout: {
-        ...currentWorkout,
-        exercises: [
-          ...currentWorkout.exercises,
-          createExercise(name, currentWorkout.id),
-        ],
-      },
-    });
-  },
-}));
+      const newExercise = createExercise(name, currentWorkout.id);
+
+      set((state) => {
+        state.currentWorkout?.exercises.push(newExercise);
+      });
+    },
+  }))
+);
