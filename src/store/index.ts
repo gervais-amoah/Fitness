@@ -1,7 +1,7 @@
+import { createExercise } from '@/services/exerciseService';
+import { finishWorkout, newWorkout } from '@/services/workoutService';
 import { WorkoutWithExercises } from '@/types/models';
 import { create } from 'zustand';
-import * as Crypto from 'expo-crypto';
-import { finishWorkout, newWorkout } from '@/services/workoutService';
 
 type State = {
   currentWorkout: WorkoutWithExercises | null;
@@ -11,6 +11,9 @@ type State = {
 type Actions = {
   startWorkout: () => void;
   finishWorkout: () => void;
+
+  addExercise: (name: string) => void;
+  // removeExercise: (exercise: ExerciseWithSets) => void;
 };
 
 export const useWorkoutStore = create<State & Actions>()((set, get) => ({
@@ -31,6 +34,22 @@ export const useWorkoutStore = create<State & Actions>()((set, get) => ({
     set({
       workouts: [...workouts, finishWorkout(currentWorkout)],
       currentWorkout: null,
+    });
+  },
+
+  addExercise: (name: string) => {
+    const { currentWorkout } = get();
+
+    if (!currentWorkout) return;
+
+    set({
+      currentWorkout: {
+        ...currentWorkout,
+        exercises: [
+          ...currentWorkout.exercises,
+          createExercise(name, currentWorkout.id),
+        ],
+      },
     });
   },
 }));

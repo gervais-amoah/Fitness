@@ -13,6 +13,7 @@ export default function CurrentWorkoutScreen() {
 
   const currentWorkout = useWorkoutStore((state) => state.currentWorkout);
   const finishWorkout = useWorkoutStore((state) => state.finishWorkout);
+  const addExercise = useWorkoutStore((state) => state.addExercise);
 
   if (!currentWorkout) {
     return <Redirect href="/" />;
@@ -37,15 +38,13 @@ export default function CurrentWorkoutScreen() {
         keyboardVerticalOffset={headerHeight}
       >
         <FlatList
-          data={[1, 2, 3]}
+          data={currentWorkout.exercises}
           contentContainerStyle={{ gap: 10, padding: 10 }}
-          renderItem={() => <WorkoutExerciseItem />}
+          renderItem={({ item }) => <WorkoutExerciseItem exercise={item} />}
           ListHeaderComponent={<WorkoutHeader />}
           ListFooterComponent={
             <SelectExerciseModal
-              onSelectExercise={(name) =>
-                console.warn('Exercise seleted: ', name)
-              }
+              onSelectExercise={(name) => addExercise(name)}
             />
           }
         />
