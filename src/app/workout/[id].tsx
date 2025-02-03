@@ -6,6 +6,7 @@ import { FlatList, StyleSheet } from 'react-native';
 import dayjs from 'dayjs';
 import { useWorkoutStore } from '@/store';
 import React from 'react';
+import WorkoutDetailsExerciseItem from '@/components/WorkoutDetailsExerciseItem';
 
 export default function WorkoutScreen() {
   const { id } = useLocalSearchParams();
@@ -21,7 +22,7 @@ export default function WorkoutScreen() {
     <FlatList
       data={workout.exercises}
       contentContainerStyle={{ gap: 8, padding: 8 }}
-      renderItem={({ item }) => <WorkoutExerciseItem exercise={item} />}
+      renderItem={({ item }) => <WorkoutDetailsExerciseItem exercise={item} />}
       ListHeaderComponent={
         <React.Fragment>
           <Text style={styles.title}>Workout details</Text>
