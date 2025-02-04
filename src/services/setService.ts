@@ -40,7 +40,13 @@ export const updateSet = (
     updatedSet.oneRM = getSetOneRM(updatedSet.weight, updatedSet.reps);
   }
 
-  console.log('updatedSet', updatedSet);
-
   return updatedSet;
+};
+
+const isSetComplete = (set: ExerciseSet) => {
+  return set.reps && set.reps > 0;
+};
+
+export const cleanSets = (sets: ExerciseSet[]) => {
+  return sets.filter(isSetComplete);
 };

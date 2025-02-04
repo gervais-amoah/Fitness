@@ -20,12 +20,10 @@ export default function SetItem({ index, set }: SetItem) {
 
   const handleWeightChange = () => {
     updateSet(set.id, { weight: parseFloat(weight) });
-    console.log('weight updated');
   };
 
   const handleRepsChange = () => {
     updateSet(set.id, { reps: parseInt(reps) });
-    console.log('reps updated');
   };
 
   const renderRightActions = () => (

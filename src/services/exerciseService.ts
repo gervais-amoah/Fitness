@@ -1,4 +1,4 @@
-import { createSet, getSetTotalWeight } from '@/services/setService';
+import { cleanSets, createSet, getSetTotalWeight } from '@/services/setService';
 import { ExerciseWithSets } from '@/types/models';
 import * as Crypto from 'expo-crypto';
 
@@ -25,4 +25,17 @@ export const createExercise = (
   newExercise.sets.push(epmtySet);
 
   return newExercise;
+};
+
+export const cleanExercise = (exercise: ExerciseWithSets) => {
+  const cleanedExercise = cleanSets(exercise.sets);
+
+  if (cleanedExercise.length === 0) {
+    return null;
+  }
+
+  return {
+    ...exercise,
+    sets: cleanedExercise,
+  };
 };

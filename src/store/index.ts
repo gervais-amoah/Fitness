@@ -1,6 +1,6 @@
 import { createExercise } from '@/services/exerciseService';
 import { createSet, updateSet } from '@/services/setService';
-import { newWorkout } from '@/services/workoutService';
+import { finishWorkout, newWorkout } from '@/services/workoutService';
 import { ExerciseSet, WorkoutWithExercises } from '@/types/models';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
@@ -36,13 +36,15 @@ export const useWorkoutStore = create<State & Actions>()(
     },
 
     finishWorkout: () => {
-      const { currentWorkout, workouts } = get();
+      const { currentWorkout } = get();
 
       if (!currentWorkout) return;
 
+      const finishedWorkout = finishWorkout(currentWorkout);
+
       set((state) => {
         state.currentWorkout = null;
-        state.workouts.unshift(currentWorkout);
+        state.workouts.unshift(finishedWorkout);
       });
     },
 
@@ -74,8 +76,6 @@ export const useWorkoutStore = create<State & Actions>()(
       setId: string,
       updatedFields: Pick<ExerciseSet, 'weight' | 'reps'>
     ) => {
-      console.log('updateSet', setId, updatedFields);
-
       set(({ currentWorkout }) => {
         const exercise = currentWorkout?.exercises.find((ex) =>
           ex.sets.some((set) => set.id === setId)
