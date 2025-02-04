@@ -4,19 +4,30 @@ import {
   createWorkoutsTableQuery,
 } from './commands';
 
-let db: SQLite.SQLiteDatabase | null = null;
 export const dbName = 'fitness.db';
 
-export const getDB = async () => {
-  if (db) {
-    return db;
+let dbPromise: Promise<SQLite.SQLiteDatabase> | null = null;
+
+export const getDB = async (): Promise<SQLite.SQLiteDatabase> => {
+  if (!dbPromise) {
+    dbPromise = (async () => {
+      try {
+        const db = await SQLite.openDatabaseAsync(dbName, {
+          useNewConnection: true,
+        });
+
+        await db.withTransactionAsync(async () => {
+          await db.execAsync(createWorkoutsTableQuery);
+          await db.execAsync(createExercisesTableQuery);
+        });
+
+        return db;
+      } catch (error) {
+        console.error('Database initialization error:', error);
+        throw error; // Re-throw to handle it at a higher level if needed
+      }
+    })();
   }
 
-  db = await SQLite.openDatabaseAsync(dbName, { useNewConnection: true });
-
-  //  setup the database
-  await db.execAsync(createWorkoutsTableQuery);
-  await db.execAsync(createExercisesTableQuery);
-
-  return db;
+  return dbPromise;
 };
