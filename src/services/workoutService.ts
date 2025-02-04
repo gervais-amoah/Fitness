@@ -1,10 +1,10 @@
-import { WorkoutWithExercises } from '@/types/models';
+import { getCurrentWorkout, saveWorkout } from '@/db/workouts';
 import {
   cleanExercise,
   getExerciseTotalWeight,
 } from '@/services/exerciseService';
+import { WorkoutWithExercises } from '@/types/models';
 import * as Crypto from 'expo-crypto';
-import { saveWorkout } from '@/db/workouts';
 
 export const getWorkoutTotalWeight = (workout: WorkoutWithExercises) => {
   return workout.exercises.reduce(
@@ -47,3 +47,15 @@ export const cleanWorkout = (workout: WorkoutWithExercises) => {
     exercises: cleanedExercises,
   };
 };
+
+export const getCurrentWorkoutWithExercises =
+  async (): Promise<WorkoutWithExercises | null> => {
+    const workout = await getCurrentWorkout();
+
+    if (!workout) return null;
+
+    return {
+      ...workout,
+      exercises: [],
+    };
+  };

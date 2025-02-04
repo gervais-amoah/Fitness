@@ -1,7 +1,10 @@
-import { getCurrentWorkout } from '@/db/workouts';
 import { createExercise } from '@/services/exerciseService';
 import { createSet, updateSet } from '@/services/setService';
-import { finishWorkout, newWorkout } from '@/services/workoutService';
+import {
+  finishWorkout,
+  getCurrentWorkoutWithExercises,
+  newWorkout,
+} from '@/services/workoutService';
 import { ExerciseSet, WorkoutWithExercises } from '@/types/models';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
@@ -34,8 +37,7 @@ export const useWorkoutStore = create<State & Actions>()(
 
     // Actions
     loadWorkouts: async () => {
-      const currentWorkout = await getCurrentWorkout();
-
+      const currentWorkout = await getCurrentWorkoutWithExercises();
       set({ currentWorkout });
     },
 

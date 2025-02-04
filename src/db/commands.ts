@@ -13,4 +13,5 @@ export const getCurrentWorkoutQuery = `
 SELECT * FROM workouts
 WHERE finished_at IS NULL
 ORDER BY created_at DESC
+LIMIT 1
 `;
