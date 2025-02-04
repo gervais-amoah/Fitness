@@ -1,3 +1,4 @@
+// WORKOUT COMMANDS
 export const createWorkoutsTableQuery = `
 CREATE TABLE IF NOT EXISTS workouts (
   id TEXT PRIMARY KEY, 
@@ -14,4 +15,11 @@ SELECT * FROM workouts
 WHERE finished_at IS NULL
 ORDER BY created_at DESC
 LIMIT 1
+`;
+
+export const getWorkoutsQuery = `
+SELECT * FROM workouts
+WHERE finished_at IS NOT NULL
+ORDER BY created_at DESC
+LIMIT 20
 `;

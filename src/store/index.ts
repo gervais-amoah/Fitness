@@ -3,6 +3,7 @@ import { createSet, updateSet } from '@/services/setService';
 import {
   finishWorkout,
   getCurrentWorkoutWithExercises,
+  getWorkoutsWithExercises,
   newWorkout,
 } from '@/services/workoutService';
 import { ExerciseSet, WorkoutWithExercises } from '@/types/models';
@@ -38,7 +39,8 @@ export const useWorkoutStore = create<State & Actions>()(
     // Actions
     loadWorkouts: async () => {
       const currentWorkout = await getCurrentWorkoutWithExercises();
-      set({ currentWorkout });
+      const finishedWorkouts = await getWorkoutsWithExercises();
+      set({ currentWorkout, workouts: finishedWorkouts });
     },
 
     startWorkout: () => {

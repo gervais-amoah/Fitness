@@ -1,6 +1,10 @@
 import { Workout } from '@/types/models';
 import { getDB } from '.';
-import { getCurrentWorkoutQuery, saveWorkoutQuery } from './commands';
+import {
+  getCurrentWorkoutQuery,
+  getWorkoutsQuery,
+  saveWorkoutQuery,
+} from './commands';
 import { DbWorkout } from './db';
 
 export const saveWorkout = async (workout: Workout) => {
@@ -33,5 +37,16 @@ export const getCurrentWorkout = async (): Promise<Workout | null> => {
   } catch (error) {
     console.warn('An error occurs while getting the current workout', error);
     return null;
+  }
+};
+
+export const getWorkouts = async (): Promise<Workout[]> => {
+  try {
+    const db = await getDB();
+    const workouts = await db.getAllAsync<DbWorkout>(getWorkoutsQuery);
+    return workouts.map(parseWorkout);
+  } catch (error) {
+    console.warn('An error occurs while getting the workouts', error);
+    return [];
   }
 };
