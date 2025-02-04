@@ -31,16 +31,16 @@ export const useWorkoutStore = create<State & Actions>()(
     workouts: [],
 
     // Actions
-    startWorkout: () => {
-      set({ currentWorkout: newWorkout() });
+    startWorkout: async () => {
+      set({ currentWorkout: await newWorkout() });
     },
 
-    finishWorkout: () => {
+    finishWorkout: async () => {
       const { currentWorkout } = get();
 
       if (!currentWorkout) return;
 
-      const finishedWorkout = finishWorkout(currentWorkout);
+      const finishedWorkout = await finishWorkout(currentWorkout);
 
       set((state) => {
         state.currentWorkout = null;

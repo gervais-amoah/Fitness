@@ -4,6 +4,7 @@ import {
   getExerciseTotalWeight,
 } from '@/services/exerciseService';
 import * as Crypto from 'expo-crypto';
+import { saveWorkout } from '@/db/workouts';
 
 export const getWorkoutTotalWeight = (workout: WorkoutWithExercises) => {
   return workout.exercises.reduce(
@@ -12,20 +13,27 @@ export const getWorkoutTotalWeight = (workout: WorkoutWithExercises) => {
   );
 };
 
-export const newWorkout = () => {
+export const newWorkout = async () => {
   const newWorkout: WorkoutWithExercises = {
     id: Crypto.randomUUID(),
     createdAt: new Date(),
     finishedAt: null,
     exercises: [],
   };
+
+  //  save the workout to the database
+  await saveWorkout(newWorkout);
+
   return newWorkout;
 };
 
-export const finishWorkout = (workout: WorkoutWithExercises) => {
+export const finishWorkout = async (workout: WorkoutWithExercises) => {
   const cleanedWorkout = cleanWorkout(workout);
 
   const finishedWorkout = { ...cleanedWorkout, finishedAt: new Date() };
+
+  //  save the workout to the database
+  await saveWorkout(finishedWorkout);
   return finishedWorkout;
 };
 
