@@ -8,12 +8,19 @@ import {
 import { useColorScheme } from 'react-native';
 import Colors from '@/constants/Colors';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
+import * as SQLite from 'expo-sqlite';
+import { dbName } from '@/db';
+
+const db = SQLite.openDatabaseSync(dbName);
+// SQLite.deleteDatabaseSync(dbName); // Uncomment to delete the database, useful for testing
 
 DarkTheme.colors.primary = Colors.dark.tint;
 DefaultTheme.colors.primary = Colors.light.tint;
 
 export default function RootLayout() {
   const colorsScheme = useColorScheme();
+  useDrizzleStudio(db);
 
   return (
     <ThemeProvider value={colorsScheme === 'dark' ? DarkTheme : DefaultTheme}>
