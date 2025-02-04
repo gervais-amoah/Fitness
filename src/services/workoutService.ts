@@ -13,7 +13,7 @@ export const getWorkoutTotalWeight = (workout: WorkoutWithExercises) => {
   );
 };
 
-export const newWorkout = async () => {
+export const newWorkout = () => {
   const newWorkout: WorkoutWithExercises = {
     id: Crypto.randomUUID(),
     createdAt: new Date(),
@@ -22,18 +22,18 @@ export const newWorkout = async () => {
   };
 
   //  save the workout to the database
-  await saveWorkout(newWorkout);
+  saveWorkout(newWorkout);
 
   return newWorkout;
 };
 
-export const finishWorkout = async (workout: WorkoutWithExercises) => {
+export const finishWorkout = (workout: WorkoutWithExercises) => {
   const cleanedWorkout = cleanWorkout(workout);
 
   const finishedWorkout = { ...cleanedWorkout, finishedAt: new Date() };
 
   //  save the workout to the database
-  await saveWorkout(finishedWorkout);
+  saveWorkout(finishedWorkout);
   return finishedWorkout;
 };
 

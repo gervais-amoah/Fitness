@@ -1,3 +1,4 @@
+import { getCurrentWorkout } from '@/db/workouts';
 import { createExercise } from '@/services/exerciseService';
 import { createSet, updateSet } from '@/services/setService';
 import { finishWorkout, newWorkout } from '@/services/workoutService';
@@ -11,6 +12,7 @@ type State = {
 };
 
 type Actions = {
+  loadWorkouts: () => void;
   startWorkout: () => void;
   finishWorkout: () => void;
 
@@ -31,16 +33,22 @@ export const useWorkoutStore = create<State & Actions>()(
     workouts: [],
 
     // Actions
-    startWorkout: async () => {
-      set({ currentWorkout: await newWorkout() });
+    loadWorkouts: async () => {
+      const currentWorkout = await getCurrentWorkout();
+
+      set({ currentWorkout });
     },
 
-    finishWorkout: async () => {
+    startWorkout: () => {
+      set({ currentWorkout: newWorkout() });
+    },
+
+    finishWorkout: () => {
       const { currentWorkout } = get();
 
       if (!currentWorkout) return;
 
-      const finishedWorkout = await finishWorkout(currentWorkout);
+      const finishedWorkout = finishWorkout(currentWorkout);
 
       set((state) => {
         state.currentWorkout = null;

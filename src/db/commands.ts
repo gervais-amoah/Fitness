@@ -6,5 +6,11 @@ CREATE TABLE IF NOT EXISTS workouts (
 );`;
 
 export const saveWorkoutQuery = `
-'INSERT OR REPLACE INTO workouts (id, created_at, finished_at) VALUES (?, ?, ?)'
+INSERT OR REPLACE INTO workouts (id, created_at, finished_at) VALUES (?, ?, ?)
+`;
+
+export const getCurrentWorkoutQuery = `
+SELECT * FROM workouts
+WHERE finished_at IS NULL
+ORDER BY created_at DESC
 `;
