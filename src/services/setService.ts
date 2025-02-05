@@ -1,3 +1,4 @@
+import { saveSet } from '@/db/sets';
 import { ExerciseSet } from '@/types/models';
 import * as Crypto from 'expo-crypto';
 
@@ -20,6 +21,9 @@ export const createSet = (exerciseId: string) => {
     id: Crypto.randomUUID(),
     exerciseId,
   };
+
+  saveSet(newSet);
+
   return newSet;
 };
 
@@ -39,6 +43,8 @@ export const updateSet = (
   if (updatedSet.reps !== undefined && updatedSet.weight !== undefined) {
     updatedSet.oneRM = getSetOneRM(updatedSet.weight, updatedSet.reps);
   }
+
+  saveSet(updatedSet);
 
   return updatedSet;
 };

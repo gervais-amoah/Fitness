@@ -1,6 +1,7 @@
 import * as SQLite from 'expo-sqlite';
 import {
   createExercisesTableQuery,
+  createSetsTableQuery,
   createWorkoutsTableQuery,
 } from './commands';
 
@@ -19,6 +20,7 @@ export const getDB = async (): Promise<SQLite.SQLiteDatabase> => {
         await db.withTransactionAsync(async () => {
           await db.execAsync(createWorkoutsTableQuery);
           await db.execAsync(createExercisesTableQuery);
+          await db.execAsync(createSetsTableQuery);
         });
 
         return db;

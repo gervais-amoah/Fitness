@@ -55,8 +55,9 @@ CREATE TABLE IF NOT EXISTS sets (
   id TEXT PRIMARY KEY, 
   exercise_id TEXT, 
   reps INTEGER, 
-  weight INTEGER, 
-  one_rm INTEGER
+  weight REAL, 
+  one_rm REAL,
+  FOREIGN KEY (exercise_id) REFERENCES exercises (id)
 );`;
 
 export const saveSetQuery = `
