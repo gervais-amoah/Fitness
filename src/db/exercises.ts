@@ -1,6 +1,10 @@
 import { Exercise } from '@/types/models';
 import { getDB } from '.';
-import { getExercisesQuery, saveExerciseQuery } from './commands';
+import {
+  deleteExerciseQuery,
+  getExercisesQuery,
+  saveExerciseQuery,
+} from './commands';
 import { DbExercise } from './db';
 
 export const saveExercise = async (exercise: Exercise) => {
@@ -37,5 +41,14 @@ export const getExercises = async (workout_id: string): Promise<Exercise[]> => {
   } catch (error) {
     console.warn('An error occurs while getting the exercises', error);
     return [];
+  }
+};
+
+export const deleteExercise = async (exerciseId: string) => {
+  try {
+    const db = await getDB();
+    await db.runAsync(deleteExerciseQuery, [exerciseId]);
+  } catch (error) {
+    console.warn('An error occurs while deleting the exercise', error);
   }
 };

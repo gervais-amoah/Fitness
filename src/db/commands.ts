@@ -44,6 +44,11 @@ WHERE workout_id = ?
 ORDER BY name ASC
 `;
 
+export const deleteExerciseQuery = `
+DELETE FROM exercises
+WHERE id = ?
+`;
+
 // SET COMMANDS
 export const createSetsTableQuery = `
 CREATE TABLE IF NOT EXISTS sets (
