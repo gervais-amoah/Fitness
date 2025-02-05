@@ -4,7 +4,7 @@ import WorkoutListItem from '@/components/WorkoutListItem';
 import { useWorkoutStore } from '@/store';
 import { Link, router } from 'expo-router';
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 export default function HomeScreen() {
   const currentWorkout = useWorkoutStore((state) => state.currentWorkout);
@@ -17,9 +17,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <View
-      style={{ flex: 1, gap: 10, padding: 10, backgroundColor: 'transparent' }}
-    >
+    <View style={styles.container}>
       {currentWorkout ? (
         <Link href="/workout/current" asChild>
           <CustomButton title="Resume Workout" type="primary" />
@@ -41,3 +39,12 @@ export default function HomeScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    gap: 10,
+    padding: 10,
+    backgroundColor: 'transparent',
+  },
+});
