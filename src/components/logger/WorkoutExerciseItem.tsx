@@ -5,6 +5,7 @@ import { ExerciseWithSets } from '@/types/models';
 import { StyleSheet } from 'react-native';
 import CustomButton from '../general/CustomButton';
 import SetItem from './SetItem';
+import { formatImageName } from '@/utils/formatExerciseName';
 
 export default function WorkoutExerciseItem({
   exercise,
@@ -14,7 +15,7 @@ export default function WorkoutExerciseItem({
   const addSet = useWorkoutStore().addSet;
 
   return (
-    <Card title={exercise.name}>
+    <Card title={exercise.name} image={formatImageName(exercise.name)}>
       <View style={styles.header}>
         <Text style={styles.setNumber}>Set</Text>
         <Text style={styles.setInfo}>kg</Text>
