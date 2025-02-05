@@ -37,7 +37,6 @@ export const cleanExercise = (exercise: ExerciseWithSets) => {
 
   if (cleanedExercise.length === 0) {
     deleteExercise(exercise.id);
-    console.warn('⚠️ Sould Delete exercise', exercise.id);
     return null;
   }
 

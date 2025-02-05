@@ -1,6 +1,7 @@
 import { Workout } from '@/types/models';
 import { getDB } from '.';
 import {
+  deleteWorkoutQuery,
   getCurrentWorkoutQuery,
   getWorkoutsQuery,
   saveWorkoutQuery,
@@ -48,5 +49,14 @@ export const getWorkouts = async (): Promise<Workout[]> => {
   } catch (error) {
     console.warn('An error occurs while getting the workouts', error);
     return [];
+  }
+};
+
+export const deleteWorkoutInLocalDB = async (workoutId: string) => {
+  try {
+    const db = await getDB();
+    await db.runAsync(deleteWorkoutQuery, [workoutId]);
+  } catch (error) {
+    console.warn('An error occurs while deleting the workout', error);
   }
 };

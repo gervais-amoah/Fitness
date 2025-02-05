@@ -1,5 +1,10 @@
 import { getExercises } from '@/db/exercises';
-import { getCurrentWorkout, getWorkouts, saveWorkout } from '@/db/workouts';
+import {
+  deleteWorkoutInLocalDB,
+  getCurrentWorkout,
+  getWorkouts,
+  saveWorkout,
+} from '@/db/workouts';
 import {
   addSetsToExercise,
   cleanExercise,
@@ -31,6 +36,7 @@ export const newWorkout = () => {
 
 export const finishWorkout = (workout: WorkoutWithExercises) => {
   const cleanedWorkout = cleanWorkout(workout);
+  if (!cleanedWorkout) return null;
 
   const finishedWorkout = { ...cleanedWorkout, finishedAt: new Date() };
 
@@ -39,10 +45,19 @@ export const finishWorkout = (workout: WorkoutWithExercises) => {
   return finishedWorkout;
 };
 
+export const deleteWorkout = (workoutId: string) => {
+  deleteWorkoutInLocalDB(workoutId);
+};
+
 export const cleanWorkout = (workout: WorkoutWithExercises) => {
   const cleanedExercises = workout.exercises
     .map(cleanExercise)
     .filter((e) => e !== null);
+
+  if (cleanedExercises.length === 0) {
+    deleteWorkout(workout.id);
+    return null;
+  }
 
   return {
     ...workout,

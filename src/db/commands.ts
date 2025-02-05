@@ -24,6 +24,11 @@ ORDER BY created_at DESC
 LIMIT 20
 `;
 
+export const deleteWorkoutQuery = `
+DELETE FROM workouts
+WHERE id = ?
+`;
+
 // EXERCISE COMMANDS
 export const createExercisesTableQuery = `
   CREATE TABLE IF NOT EXISTS exercises (

@@ -45,7 +45,6 @@ export const getExercises = async (workout_id: string): Promise<Exercise[]> => {
 };
 
 export const deleteExercise = async (exerciseId: string) => {
-  console.warn('⚠️ Deleteing Exercise', exerciseId);
   try {
     const db = await getDB();
     await db.runAsync(deleteExerciseQuery, [exerciseId]);

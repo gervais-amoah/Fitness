@@ -50,14 +50,15 @@ export const useWorkoutStore = create<State & Actions>()(
 
     finishWorkout: () => {
       const { currentWorkout } = get();
-
       if (!currentWorkout) return;
 
       const finishedWorkout = finishWorkout(currentWorkout);
 
       set((state) => {
         state.currentWorkout = null;
-        state.workouts.unshift(finishedWorkout);
+        if (finishedWorkout) {
+          state.workouts.unshift(finishedWorkout);
+        }
       });
     },
 
