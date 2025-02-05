@@ -1,4 +1,4 @@
-import { saveSetIntoLocalDB } from '@/db/sets';
+import { deleteSetInLocalDB, saveSetIntoLocalDB } from '@/db/sets';
 import { ExerciseSet } from '@/types/models';
 import * as Crypto from 'expo-crypto';
 
@@ -54,9 +54,9 @@ const isSetComplete = (set: ExerciseSet) => {
 };
 
 export const cleanSets = (sets: ExerciseSet[]) => {
+  sets
+    .filter((set) => !isSetComplete(set))
+    .forEach((set) => deleteSetInLocalDB(set.id));
+
   return sets.filter(isSetComplete);
 };
-
-// export const deleteSet = (setId: string) => {
-//   deleteSetInLocalDb(setId);
-// };
