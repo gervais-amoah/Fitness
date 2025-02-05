@@ -4,6 +4,7 @@ import { View, Text } from '@/components/general/Themed';
 import { StyleSheet } from 'react-native';
 import { getBestSet } from '@/services/setService';
 import Colors from '@/constants/Colors';
+import { formatImageName } from '@/utils/formatExerciseName';
 
 type WorkoutDetailsExerciseItem = {
   exercise: ExerciseWithSets;
@@ -15,7 +16,7 @@ export default function WorkoutDetailsExerciseItem({
   const bestSet = getBestSet(exercise.sets);
 
   return (
-    <Card title={exercise.name}>
+    <Card title={exercise.name} image={formatImageName(exercise.name)}>
       {exercise.sets.map((exerciseSet, index) => (
         <View
           key={exerciseSet.id}
