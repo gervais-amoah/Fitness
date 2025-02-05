@@ -1,3 +1,4 @@
+import { deleteExerciseInLocalDB } from '@/db/exercises';
 import { deleteSetInLocalDB } from '@/db/sets';
 import { createExercise } from '@/services/exerciseService';
 import { createSet, updateSet } from '@/services/setService';
@@ -118,6 +119,7 @@ export const useWorkoutStore = create<State & Actions>()(
           exercise.sets = exercise.sets.filter((set) => set.id !== setId);
 
           if (exercise.sets.length === 0) {
+            deleteExerciseInLocalDB(exercise.id);
             currentWorkout.exercises = currentWorkout.exercises.filter(
               (ex) => ex.id !== exercise.id
             );

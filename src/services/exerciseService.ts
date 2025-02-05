@@ -1,4 +1,4 @@
-import { deleteExercise, saveExercise } from '@/db/exercises';
+import { deleteExerciseInLocalDB, saveExercise } from '@/db/exercises';
 import { getSetsFromLocalDB } from '@/db/sets';
 import { cleanSets, createSet, getSetTotalWeight } from '@/services/setService';
 import { Exercise, ExerciseWithSets } from '@/types/models';
@@ -36,7 +36,7 @@ export const cleanExercise = (exercise: ExerciseWithSets) => {
   const cleanedExercise = cleanSets(exercise.sets);
 
   if (cleanedExercise.length === 0) {
-    deleteExercise(exercise.id);
+    deleteExerciseInLocalDB(exercise.id);
     return null;
   }
 
@@ -54,4 +54,8 @@ export const addSetsToExercise = async (
     ...exercise,
     sets,
   };
+};
+
+export const deleteExercise = (exerciseId: string) => {
+  deleteExerciseInLocalDB(exerciseId);
 };
