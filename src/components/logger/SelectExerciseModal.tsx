@@ -1,10 +1,11 @@
-import CustomButton from '@/components/general/CustomButton';
-import { FlatList, Modal, Pressable, StyleSheet } from 'react-native';
-import { View, Text, TextInput } from '@/components/general/Themed';
 import Card from '@/components/general/Card';
+import CustomButton from '@/components/general/CustomButton';
+import { Text, TextInput, View } from '@/components/general/Themed';
+import exercises, { exerciseImages } from '@/data/exercises';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { useState } from 'react';
-import exercises from '@/data/exercises';
+import { Image } from 'expo-image';
+import React, { useState } from 'react';
+import { FlatList, Modal, Pressable, StyleSheet } from 'react-native';
 
 type SelectExerciseModal = {
   onSelectExercise: (name: string) => void;
@@ -21,7 +22,7 @@ export default function SelectExerciseModal({
   );
 
   return (
-    <>
+    <React.Fragment>
       <CustomButton
         title="Select exercise"
         onPress={() => setIsOpen(true)}
@@ -60,17 +61,33 @@ export default function SelectExerciseModal({
                     onSelectExercise(item.name);
                     setIsOpen(false);
                   }}
-                  style={{ gap: 3 }}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 10,
+                  }}
                 >
-                  <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
-                  <Text style={{ color: 'gray' }}>{item.muscle}</Text>
+                  <View style={{ width: 50, height: 50 }}>
+                    <Image
+                      source={exerciseImages[item.id]}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: 5,
+                      }}
+                    />
+                  </View>
+                  <View style={{ gap: 3 }}>
+                    <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
+                    <Text style={{ color: 'gray' }}>{item.muscle}</Text>
+                  </View>
                 </Pressable>
               )}
             />
           </Card>
         </View>
       </Modal>
-    </>
+    </React.Fragment>
   );
 }
 
