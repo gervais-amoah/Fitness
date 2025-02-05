@@ -1,11 +1,11 @@
 import Card from '@/components/general/Card';
 import CustomButton from '@/components/general/CustomButton';
 import { Text, TextInput, View } from '@/components/general/Themed';
-import exercises, { exerciseImages } from '@/data/exercises';
+import exercises from '@/data/exercises';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { Image } from 'expo-image';
 import React, { useState } from 'react';
 import { FlatList, Modal, Pressable, StyleSheet } from 'react-native';
+import ExerciseImage from '../general/ExerciseImage';
 
 type SelectExerciseModal = {
   onSelectExercise: (name: string) => void;
@@ -54,7 +54,10 @@ export default function SelectExerciseModal({
 
             <FlatList
               data={filteredExercises}
-              contentContainerStyle={{ gap: 20 }}
+              style={{ flexGrow: 1 }}
+              contentContainerStyle={{
+                gap: 20,
+              }}
               renderItem={({ item }) => (
                 <Pressable
                   onPress={() => {
@@ -67,16 +70,10 @@ export default function SelectExerciseModal({
                     gap: 10,
                   }}
                 >
-                  <View style={{ width: 50, height: 50 }}>
-                    <Image
-                      source={exerciseImages[item.id]}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        borderRadius: 5,
-                      }}
-                    />
-                  </View>
+                  <ExerciseImage
+                    imageKey={item.id}
+                    style={{ width: 50, height: 50 }}
+                  />
                   <View style={{ gap: 3 }}>
                     <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
                     <Text style={{ color: 'gray' }}>{item.muscle}</Text>
@@ -101,6 +98,8 @@ const styles = StyleSheet.create({
   modalContent: {
     width: '90%',
     height: '80%',
+    paddingBottom: 20,
+    overflow: 'hidden',
   },
   closeButton: {
     position: 'absolute',

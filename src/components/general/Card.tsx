@@ -1,9 +1,8 @@
+import { Text, useThemeColor, View } from '@/components/general/Themed';
 import { Link } from 'expo-router';
 import React from 'react';
-import { StyleSheet, Pressable, StyleProp, ViewStyle } from 'react-native';
-import { View, Text, useThemeColor } from '@/components/general/Themed';
-import { Image } from 'expo-image';
-import { exerciseImages } from '@/data/exercises';
+import { Pressable, StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import ExerciseImage from './ExerciseImage';
 
 type CardProps = {
   title: string;
@@ -23,32 +22,20 @@ export default function Card({
   const tint = useThemeColor({}, 'tint');
   const cardContent = (
     <View style={[styles.card, { borderLeftColor: tint }, style]}>
-      <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-        {image && (
-          <View
-            style={{
-              width: 65,
-              height: 65,
-              borderRadius: 5,
-              marginRight: 10,
-              marginTop: 5,
-            }}
-          >
-            <Image
-              source={exerciseImages[image]}
-              style={{
-                width: '100%',
-                height: '100%',
-                borderRadius: 5,
-              }}
-            />
+      {image ? (
+        <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+          <ExerciseImage imageKey={image} style={{ width: 65, height: 65 }} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.title}>{title}</Text>
+            {children}
           </View>
-        )}
-        <View style={{ flex: 1 }}>
+        </View>
+      ) : (
+        <React.Fragment>
           <Text style={styles.title}>{title}</Text>
           {children}
-        </View>
-      </View>
+        </React.Fragment>
+      )}
     </View>
   );
 

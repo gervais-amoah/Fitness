@@ -2,6 +2,7 @@ import { Text, View } from '@/components/general/Themed';
 import { useWorkoutStore } from '@/store';
 import { calculateDurationHourMinutes } from '@/utils/time';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useEffect, useState } from 'react';
 
 export default function WorkoutHeader() {
@@ -27,7 +28,7 @@ export default function WorkoutHeader() {
     <View style={{ gap: 10, backgroundColor: 'transparent', marginBottom: 20 }}>
       <Text style={{ fontWeight: 'bold', fontSize: 24 }}>Workout tracker</Text>
       <Text style={{ fontSize: 18 }}>
-        <FontAwesome5 name="clock" size={18} color="gray" /> {timer}
+        <MaterialCommunityIcons name="timer" size={18} color="gray" /> {timer}
       </Text>
     </View>
   );
