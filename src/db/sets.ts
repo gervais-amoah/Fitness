@@ -1,9 +1,9 @@
 import { ExerciseSet } from '@/types/models';
 import { getDB } from '.';
-import { getSetsQuery, saveSetQuery } from './commands';
+import { deleteSetQuery, getSetsQuery, saveSetQuery } from './commands';
 import { DbExerciseSet } from './db';
 
-export const saveSet = async (exerciseSet: ExerciseSet) => {
+export const saveSetIntoLocalDB = async (exerciseSet: ExerciseSet) => {
   try {
     const db = await getDB();
     const res = await db.runAsync(saveSetQuery, [
@@ -28,7 +28,9 @@ const parseExerciseSet = (exerciseSet: DbExerciseSet): ExerciseSet => {
   };
 };
 
-export const getSets = async (exerciseId: string): Promise<ExerciseSet[]> => {
+export const getSetsFromLocalDB = async (
+  exerciseId: string
+): Promise<ExerciseSet[]> => {
   try {
     const db = await getDB();
     const sets = await db.getAllAsync<DbExerciseSet>(getSetsQuery, [
@@ -38,5 +40,14 @@ export const getSets = async (exerciseId: string): Promise<ExerciseSet[]> => {
   } catch (error) {
     console.warn('An error occurs while getting the sets', error);
     return [];
+  }
+};
+
+export const deleteSetInLocalDB = async (setId: string) => {
+  try {
+    const db = await getDB();
+    await db.runAsync(deleteSetQuery, [setId]);
+  } catch (error) {
+    console.warn('An error occurs while deleting the set', error);
   }
 };

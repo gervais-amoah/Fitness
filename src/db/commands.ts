@@ -69,3 +69,8 @@ SELECT * FROM sets
 WHERE exercise_id = ?
 ORDER BY reps ASC 
 `;
+
+export const deleteSetQuery = `
+DELETE FROM sets
+WHERE id = ?
+`;

@@ -1,3 +1,4 @@
+import { deleteSetInLocalDB } from '@/db/sets';
 import { createExercise } from '@/services/exerciseService';
 import { createSet, updateSet } from '@/services/setService';
 import {
@@ -103,6 +104,8 @@ export const useWorkoutStore = create<State & Actions>()(
       });
     },
     deleteSet: (setId) => {
+      deleteSetInLocalDB(setId);
+
       set(({ currentWorkout }) => {
         if (!currentWorkout) return;
 
