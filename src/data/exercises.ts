@@ -1,3 +1,6 @@
+//  images for images can be found here: https://fitnessprogramer.com/
+//  the image name should be the same as the id
+
 export default [
   {
     id: 'dumbbell-curl',
@@ -90,8 +93,8 @@ export default [
     muscle: 'Chest',
   },
   {
-    id: 'barbell-curl',
-    name: 'Barbell Curl',
+    id: 'zottman-curl',
+    name: 'Zottman Curl',
     muscle: 'Biceps',
   },
   {
@@ -105,19 +108,19 @@ export default [
     muscle: 'Shoulders',
   },
   {
-    id: 'skull-crusher',
-    name: 'Skull Crusher',
+    id: 'dumbbell-skull-crusher',
+    name: 'Dumbbell Skull Crusher',
     muscle: 'Triceps',
   },
   {
-    id: 'sumo-deadlift',
-    name: 'Sumo Deadlift',
+    id: 'dumbbell-sumo-deadlift',
+    name: 'Dumbbell Sumo Deadlift',
     muscle: 'Legs',
   },
   {
-    id: 'hip-thrust',
-    name: 'Hip Thrust',
-    muscle: 'Glutes',
+    id: 'barbell-hip-thrust',
+    name: 'Barbell Hip Thrust',
+    muscle: 'Hip',
   },
   {
     id: 'kettlebell-swing',
@@ -125,17 +128,12 @@ export default [
     muscle: 'Full Body',
   },
   {
-    id: 'reverse-fly',
-    name: 'Reverse Fly',
-    muscle: 'Rear Deltoids',
-  },
-  {
-    id: 'tricep-extension',
-    name: 'Tricep Extension',
-    muscle: 'Triceps',
+    id: 'dumbbell-reverse-fly',
+    name: 'Dumbbell Reverse Fly',
+    muscle: 'Shoulders',
   },
 
-  //  others
+  //  No Image provided
 
   {
     id: 'decline-bench-press',
@@ -201,6 +199,11 @@ export default [
     id: 'face-pull',
     name: 'Face Pull',
     muscle: 'Shoulders',
+  },
+  {
+    id: 'barbell-curl',
+    name: 'Barbell Curl',
+    muscle: 'Biceps',
   },
   {
     id: 'seated-cable-row',
