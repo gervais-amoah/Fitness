@@ -7,6 +7,7 @@ import {
 import {
   ExerciseSet,
   ExerciseWithSets,
+  Workout,
   WorkoutWithExercises,
 } from '@/types/models';
 import * as Crypto from 'expo-crypto';
@@ -53,18 +54,23 @@ export const cleanWorkout = (workout: WorkoutWithExercises) => {
   };
 };
 
+const addExercisesToWorkout = async (
+  workout: Workout
+): Promise<WorkoutWithExercises> => {
+  const exercises = await getExercises(workout.id);
+  return {
+    ...workout,
+    exercises: exercises.map((ex) => ({ ...ex, sets: [] })),
+  };
+};
+
 export const getCurrentWorkoutWithExercises =
   async (): Promise<WorkoutWithExercises | null> => {
     const workout = await getCurrentWorkout();
 
     if (!workout) return null;
 
-    const exercises = await getExercises(workout.id);
-
-    return {
-      ...workout,
-      exercises: exercises.map((ex) => ({ ...ex, sets: [] })),
-    };
+    return await addExercisesToWorkout(workout);
   };
 
 export const getWorkoutsWithExercises = async (): Promise<
@@ -72,12 +78,7 @@ export const getWorkoutsWithExercises = async (): Promise<
 > => {
   const workouts = await getWorkouts();
 
-  if (workouts.length === 0) return [];
+  if (!workouts || workouts.length === 0) return [];
 
-  return workouts.map((workout) => {
-    return {
-      ...workout,
-      exercises: [] as ExerciseWithSets[],
-    };
-  });
+  return await Promise.all(workouts.map(addExercisesToWorkout));
 };
