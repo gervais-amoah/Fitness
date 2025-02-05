@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Fitness",
-    "slug": "Fitness",
-    "scheme": "fitness",
+    "name": "Just Lift it",
+    "slug": "just-lift-it",
+    "scheme": "just-lift-it",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
